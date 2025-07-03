@@ -593,7 +593,7 @@
         margin-right: 10px;
       }
 
-      /* Overlay */
+        /* Overlay */
       .overlay {
         position: fixed;
         top: 0;
@@ -601,11 +601,10 @@
         width: 100%;
         height: 100%;
         background: rgba(0, 0, 0, 0.7);
-        z-index: 9999; /* make sure it's above the sidebar */
+        z-index: 999;
         display: none;
-        cursor: pointer;
       }
-      
+
       .overlay.active {
         display: block;
       }
@@ -733,6 +732,7 @@
 
       <!-- Sidebar -->
       <div class="sidebar" id="sidebar">
+        <button id="closeSidebar" style="background: none; border: none; color: white; font-size: 20px; cursor: pointer; margin-bottom: 20px;">✖ Close</button>
         <div class="logo">Music Lounge_</div>
         <ul class="nav-menu">
           <li class="nav-item active">Chat</li>
@@ -1168,16 +1168,38 @@
           avatarOptions.querySelectorAll("img").forEach((el) => {
             el.style.borderColor = "transparent";
           });
-
+      
           // Add border to selected
           img.style.borderColor = "var(--primary)";
           currentAvatar = img.src;
           userAvatar.src = currentAvatar;
-
+      
+          // ✅ Save that avatar has been set
+          localStorage.setItem("avatarSet", "true");
+      
           socket.emit("set_avatar", {
             avatar: currentAvatar,
           });
         });
+      });
+
+      customAvatarInput.addEventListener("change", () => {
+        const file = customAvatarInput.files[0];
+        if (!file) return;
+      
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          currentAvatar = e.target.result;
+          userAvatar.src = currentAvatar;
+      
+          // ✅ Save to localStorage
+          localStorage.setItem("avatarSet", "true");
+      
+          socket.emit("set_avatar", {
+            avatar: currentAvatar,
+          });
+        };
+        reader.readAsDataURL(file);
       });
 
       // Socket.io events
@@ -1226,6 +1248,17 @@
       const randomUsername = `User_${Math.floor(1000 + Math.random() * 9000)}`;
       usernameInput.value = randomUsername;
       updateUsername();
+
+      document.getElementById("closeSidebar").addEventListener("click", () => {
+        sidebar.classList.remove("active");
+        overlay.classList.remove("active");
+      });
+
+      // Open avatar picker on first visit
+      if (!localStorage.getItem("avatarSet")) {
+        openModal(avatarModal);
+      }
+
     </script>
   </body>
 </html>
