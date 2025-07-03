@@ -2,7 +2,7 @@
 
 A real-time chat and music streaming platform built with **Flask**, **Socket.IO**, and modern **HTML/CSS/JavaScript**. Users can pick or upload their profile picture, change their username, and enjoy music in a shared lounge.
 
-![screenshot](https://your-screenshot-link.com) <!-- Optional screenshot -->
+![screenshot](./static/music.png) 
 
 ---
 
@@ -19,7 +19,7 @@ A real-time chat and music streaming platform built with **Flask**, **Socket.IO*
 
 ## 🚀 Live Demo
 
-🔗 [Live Site](https://your-deployment-url.com)
+🔗 [Live Site](https://music-lounge-flask.onrender.com/)
 
 ---
 
