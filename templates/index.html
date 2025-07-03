@@ -601,10 +601,11 @@
         width: 100%;
         height: 100%;
         background: rgba(0, 0, 0, 0.7);
-        z-index: 999;
+        z-index: 9999; /* make sure it's above the sidebar */
         display: none;
+        cursor: pointer;
       }
-
+      
       .overlay.active {
         display: block;
       }
